@@ -1,10 +1,12 @@
+import 'package:bvua/screens/all_bloc/auth_flow_bloc.dart';
 import 'package:bvua/screens/auth_section/login_screen.dart';
-
 import 'package:bvua/utilities/colours.dart';
 import 'package:bvua/utilities/font_text_Style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -26,13 +28,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     {
       "image": "assets/images/onboard.png",
       "title": "Deeply Rooted in Tradition",
-      "desc":"Established in [Year] by [Members], our association is a testament to Varanasi's history and culture. For generations, our city has been celebrated for its exquisite textiles, and we're here to preserve this legacy"
-     },
+      "desc": "Established in [Year] by [Members], our association is a testament to Varanasi's history and culture. For generations, our city has been celebrated for its exquisite textiles, and we're here to preserve this legacy"
+    },
     {
       "image": "assets/images/onboard2.png",
       "title": "Advancing the Textile Industry",
-      "desc":"We're committed to supporting the growth and development of Varanasi's textile industry. Together, we aim to uphold the craftsmanship and innovation that make our community stand out."
-       },
+      "desc": "We're committed to supporting the growth and development of Varanasi's textile industry. Together, we aim to uphold the craftsmanship and innovation that make our community stand out."
+    },
   ];
 
   void onNext() {
@@ -45,7 +47,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) =>
-      LogScreen()
+            BlocProvider(
+              create: (context) => AuthFlowBloc()
+              ,
+              child: LogScreen(),
+            )
         ),
       );
     }
@@ -65,8 +71,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final mediaQuery = MediaQuery.of(context).size;
+    final mediaQuery = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -199,7 +206,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) =>
-                        LogScreen()
+                              BlocProvider(
+                                create: (context) => AuthFlowBloc(),
+                                child: LogScreen(),
+                              )
 
                           ),
                         );

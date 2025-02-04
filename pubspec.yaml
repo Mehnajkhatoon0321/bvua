@@ -41,6 +41,11 @@ dependencies:
   intl:
   image_picker:
   carousel_slider:
+  flutter_bloc:
+  http:
+  shimmer: ^3.0.0
+  dio:
+  connectivity_plus:
 
 dev_dependencies:
   flutter_test:

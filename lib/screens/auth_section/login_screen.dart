@@ -1,8 +1,10 @@
+import 'package:bvua/screens/all_bloc/auth_flow_bloc.dart';
 import 'package:bvua/screens/auth_section/forgot_password.dart';
 import 'package:bvua/screens/auth_section/membership_registration.dart';
 import 'package:bvua/screens/home_page/home_page.dart';
 import 'package:bvua/utilities/colours.dart';
 import 'package:bvua/utilities/common_function.dart';
+import 'package:bvua/utilities/common_popups.dart';
 import 'package:bvua/utilities/constant.dart';
 import 'package:bvua/utilities/flutter_flow_animations.dart';
 import 'package:bvua/utilities/font_text_Style.dart';
@@ -12,15 +14,13 @@ import 'package:bvua/utilities/pref_utils.dart';
 import 'package:bvua/utilities/validator_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-
 class LogScreen extends StatefulWidget {
-
-
-  const LogScreen({super.key,});
-
+  const LogScreen({
+    super.key,
+  });
 
   @override
   State<LogScreen> createState() => _LogScreenState();
@@ -31,9 +31,9 @@ class _LogScreenState extends State<LogScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final GlobalKey<FormFieldState<String>> _emailKey =
-  GlobalKey<FormFieldState<String>>();
+      GlobalKey<FormFieldState<String>>();
   final GlobalKey<FormFieldState<String>> _passwordKey =
-  GlobalKey<FormFieldState<String>>();
+      GlobalKey<FormFieldState<String>>();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
 
@@ -42,7 +42,6 @@ class _LogScreenState extends State<LogScreen> {
   bool isButtonEnabled = false;
   bool passIncorrect = false;
   bool emailIncorrect = false;
-
 
   bool isEmailFieldFocused = false;
   bool isPasswordFieldFocused = false;
@@ -79,6 +78,7 @@ class _LogScreenState extends State<LogScreen> {
           _password.text.isNotEmpty;
     });
   }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -87,7 +87,6 @@ class _LogScreenState extends State<LogScreen> {
     _passwordFocusNode.dispose();
     super.dispose();
   }
-
 
   final animationsMap = {
     'columnOnPageLoadAnimation1': AnimationInfo(
@@ -171,366 +170,416 @@ class _LogScreenState extends State<LogScreen> {
   @override
   Widget build(BuildContext context) {
     var valueType = CommonFunction.getMyDeviceType(MediaQuery.of(context));
-    var displayType = valueType
-        .toString()
-        .split('.')
-        .last;
+    var displayType = valueType.toString().split('.').last;
     return MediaQuery(
-      data: MediaQuery.of(context)
-          .copyWith(textScaler: const TextScaler.linear(1.0)),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body:   Stack(
-      children: [
-      Positioned(
-      top: 0,
-        left: 0,
-        right: 0,
-        child: Container(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height * 0.08,
-          color: AppColors.drawerButton1Color,
-          child: Align(
-            alignment: Alignment.topLeft,
-
-          ),
-        ),
-      ),
-      Center(
-        child: Container(
-          margin: EdgeInsets.only(
-              top: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.08),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              // topLeft: Radius.circular(32.0),
-              topRight: Radius.circular(170.0),
-            ),
-          ),
-          child: ListView(
-            padding: EdgeInsets.symmetric(
-              horizontal: (displayType == 'desktop' ||
-                  displayType == 'tablet')
-                  ? 50
-                  : 20,
-            ),
-            children: [
-SizedBox(height: 25.h,),
-
-              Container(
-                alignment: Alignment.topRight,
-                child: Image.asset(
-                  'assets/images/appLogo.png',
-                  width: (displayType == 'desktop' ||
-                      displayType == 'tablet')
-                      ? 250.w
-                      : 180,
-                  height: (displayType == 'desktop' ||
-                      displayType == 'tablet')
-                      ? 100.h
-                      : 120,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Text(
-                  Constants.welcomeTxt,
-                  style: FTextStyle.HeadingTxtStyle.copyWith(
-                    fontSize: 30,
-                    // fontWeight: FontWeight.w900
-                  ),
-                ).animateOnPageLoad(
-                    animationsMap['imageOnPageLoadAnimation2']!),
-              ),
-
-              Padding(
-                padding:  EdgeInsets.only(top:  MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.04, bottom: 15),
-                child: Form(
-                  key: formKey,
-                  onChanged: () {
-                    if (ValidatorUtils.isValidEmail(
-                        _emailController.text) &&
-                        isValidPass(_password.text)) {
-                      setState(() {
-                        isButtonEnabled = true;
-                      });
-                    } else {
-                      setState(() {
-                        isButtonEnabled = false;
-                      });
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1.0)),
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            body: BlocConsumer<AuthFlowBloc, AuthFlowState>(
+              listener: (context, state) {
+                if (state is AuthFlowLoading) {
+                  setState(() {
+                    isLoading = true;
+                  });
+                } else if (state is LogSuccess) {
+                  setState(() {
+                    isLoading = false;
+                    PrefUtils.setIsLogin(true);
+                    if (checkboxChecked) {
+                      PrefUtils.setInsideEmailLogin(_emailController.text);
+                      PrefUtils.setUserPassword(_password.text);
                     }
-                    if (isEmailFieldFocused == true) {
-                      _emailKey.currentState!.validate();
-                    }
-                    if (isPasswordFieldFocused == true) {
-                      _passwordKey.currentState!.validate();
-                    }
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        Constants.emailLabel,
-                        style: FTextStyle.formLabelTxtStyle,
-                      ).animateOnPageLoad(animationsMap[
-                      'imageOnPageLoadAnimation2']!),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        key: _emailKey,
-                        focusNode: _emailFocusNode,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration:
-                        FormFieldStyle.defaultemailDecoration,
-                        inputFormatters: [NoSpaceFormatter()],
-                        controller: _emailController,
-                        validator: ValidatorUtils.emailValidator,
-                        onTap: () {
-                          setState(() {
-                            isEmailFieldFocused = true;
-                            isPasswordFieldFocused = false;
-                          });
-                        },
-                      ).animateOnPageLoad(animationsMap[
-                      'imageOnPageLoadAnimation2']!),
-                      const SizedBox(height: 15),
-                      Text(
-                        "Password",
-                        style: FTextStyle.formLabelTxtStyle,
-                      ).animateOnPageLoad(animationsMap[
-                      'imageOnPageLoadAnimation2']!),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        key: _passwordKey,
-                        focusNode: _passwordFocusNode,
-                        decoration: FormFieldStyle
-                            .defaultPasswordInputDecoration
-                            .copyWith(
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.black45,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                passwordVisible = !passwordVisible;
-                              });
-                            },
-                          ),
-                          filled: true,
-                          fillColor: AppColors.formFieldBackColour,
-                        ),
-                        controller: _password,
-                        obscureText: !passwordVisible,
-                        inputFormatters: [NoSpaceFormatter()],
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter password";
-                          } else {
-                            return null;
-                          }
-                        },
-                        onTap: () {
-                          setState(() {
-                            isPasswordFieldFocused = true;
-                            isEmailFieldFocused = false;
-                          });
-                        },
-                      ).animateOnPageLoad(animationsMap[
-                      'imageOnPageLoadAnimation2']!),
-                    ],
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            checkboxChecked = !checkboxChecked;
-                            print(
-                                'Checkbox checked: $checkboxChecked');
+                  });
 
-                            PrefUtils.setRememberMe(checkboxChecked);
+                  Map<String, dynamic> data = state.logResponse;
 
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: IconTheme(
-                            data: const IconThemeData(
-                              color: AppColors.drawerButton1Color,
-                              size: 20,
-                            ),
-                            child: Icon(
-                              checkboxChecked
-                                  ? Icons.check_box
-                                  : Icons.check_box_outline_blank,
-                            ),
-                          ),
-                        ),
-                      ),
+                  print('LoginResponse>>>>>>>>$data');
+                  if (data.containsKey('token') && data.containsKey('user')) {
+                    String bearerToken = data['token'];
+                    Map<String, dynamic> user = data['user'];
 
-                      Text(
-                        Constants.rememberMeTxt,
-                        style: FTextStyle.rememberMeTextStyle,
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
+                    if (user.containsKey('role')) {
+                      String roleUser = user['role'];
+                      int roleId = user['id'];
+                      String email = user['email'];
+                      String name = user['name'];
+
+                      // Save token
+                      PrefUtils.setToken(bearerToken);
+                      // Save user
+                      PrefUtils.setRole(roleUser);
+                      // Save  role
+                      PrefUtils.setUserId(roleId);
+                      PrefUtils.setUserEmailLogin(email);
+                      PrefUtils.setInsideEmailLogin(email);
+                      PrefUtils.setUserName(name);
+
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                          const ForgotPassword(),
+                              MembershipRegistration(),
                         ),
                       );
-                    },
-                    child: Text(
-                      Constants.forgotPassword,
-                      style: FTextStyle.forgotPasswordTxtStyle,
+                    }
+                  }
+                } else if (state is LogFailure) {
+                  setState(() {
+                    isLoading = false;
+                  });
+
+                  CommonPopups.showCustomPopup(context, state.failureMessage);
+                }
+              },
+  builder: (context, state) {
+    return Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                    color: AppColors.drawerButton1Color,
+                    child: Align(
+                      alignment: Alignment.topLeft,
                     ),
                   ),
-                ],
-              ),
-               SizedBox(height:  MediaQuery.of(context).size.height * 0.07),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          // All fields are valid, proceed with submission
-                          setState(() {
-                            isLoading = true; // Start loading
-                          });
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                                HomePage()
-                            ),
-                          );
-                          // Determine whether to update or create a vendor
-
-                        } else {
-                          // If any field is invalid, trigger validation error display
-                          formKey.currentState!.validate();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(26),
+                ),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.08),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        // topLeft: Radius.circular(32.0),
+                        topRight: Radius.circular(170.0),
+                      ),
+                    ),
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: (displayType == 'desktop' ||
+                                displayType == 'tablet')
+                            ? 50
+                            : 20,
+                      ),
+                      children: [
+                        SizedBox(
+                          height: 25.h,
                         ),
-                        backgroundColor:  AppColors.drawerButton1Color
+                        Container(
+                          alignment: Alignment.topRight,
+                          child: Image.asset(
+                            'assets/images/appLogo.png',
+                            width: (displayType == 'desktop' ||
+                                    displayType == 'tablet')
+                                ? 250.w
+                                : 180,
+                            height: (displayType == 'desktop' ||
+                                    displayType == 'tablet')
+                                ? 100.h
+                                : 120,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Text(
+                            Constants.welcomeTxt,
+                            style: FTextStyle.HeadingTxtStyle.copyWith(
+                              fontSize: 30,
+                              // fontWeight: FontWeight.w900
+                            ),
+                          ).animateOnPageLoad(
+                              animationsMap['imageOnPageLoadAnimation2']!),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.04,
+                              bottom: 15),
+                          child: Form(
+                            key: formKey,
+                            onChanged: () {
+                              if (ValidatorUtils.isValidEmail(
+                                      _emailController.text) &&
+                                  isValidPass(_password.text)) {
+                                setState(() {
+                                  isButtonEnabled = true;
+                                });
+                              } else {
+                                setState(() {
+                                  isButtonEnabled = false;
+                                });
+                              }
+                              if (isEmailFieldFocused == true) {
+                                _emailKey.currentState!.validate();
+                              }
+                              if (isPasswordFieldFocused == true) {
+                                _passwordKey.currentState!.validate();
+                              }
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  Constants.emailLabel,
+                                  style: FTextStyle.formLabelTxtStyle,
+                                ).animateOnPageLoad(animationsMap[
+                                    'imageOnPageLoadAnimation2']!),
+                                const SizedBox(height: 5),
+                                TextFormField(
+                                  key: _emailKey,
+                                  focusNode: _emailFocusNode,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration:
+                                      FormFieldStyle.defaultemailDecoration,
+                                  inputFormatters: [NoSpaceFormatter()],
+                                  controller: _emailController,
+                                  validator: ValidatorUtils.emailValidator,
+                                  onTap: () {
+                                    setState(() {
+                                      isEmailFieldFocused = true;
+                                      isPasswordFieldFocused = false;
+                                    });
+                                  },
+                                ).animateOnPageLoad(animationsMap[
+                                    'imageOnPageLoadAnimation2']!),
+                                const SizedBox(height: 15),
+                                Text(
+                                  "Password",
+                                  style: FTextStyle.formLabelTxtStyle,
+                                ).animateOnPageLoad(animationsMap[
+                                    'imageOnPageLoadAnimation2']!),
+                                const SizedBox(height: 5),
+                                TextFormField(
+                                  keyboardType: TextInputType.visiblePassword,
+                                  key: _passwordKey,
+                                  focusNode: _passwordFocusNode,
+                                  decoration: FormFieldStyle
+                                      .defaultPasswordInputDecoration
+                                      .copyWith(
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        passwordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.black45,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          passwordVisible = !passwordVisible;
+                                        });
+                                      },
+                                    ),
+                                    filled: true,
+                                    fillColor: AppColors.formFieldBackColour,
+                                  ),
+                                  controller: _password,
+                                  obscureText: !passwordVisible,
+                                  inputFormatters: [NoSpaceFormatter()],
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "Please enter password";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  onTap: () {
+                                    setState(() {
+                                      isPasswordFieldFocused = true;
+                                      isEmailFieldFocused = false;
+                                    });
+                                  },
+                                ).animateOnPageLoad(animationsMap[
+                                    'imageOnPageLoadAnimation2']!),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      checkboxChecked = !checkboxChecked;
+                                      print(
+                                          'Checkbox checked: $checkboxChecked');
 
-                      ),
-                      child: isLoading
-                          ? CircularProgressIndicator(
-                          color: Colors.white)
-                          : Text(
-                          "Login", style: FTextStyle.loginBtnStyle),
+                                      PrefUtils.setRememberMe(checkboxChecked);
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 5),
+                                    child: IconTheme(
+                                      data: const IconThemeData(
+                                        color: AppColors.drawerButton1Color,
+                                        size: 20,
+                                      ),
+                                      child: Icon(
+                                        checkboxChecked
+                                            ? Icons.check_box
+                                            : Icons.check_box_outline_blank,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  Constants.rememberMeTxt,
+                                  style: FTextStyle.rememberMeTextStyle,
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotPassword(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                Constants.forgotPassword,
+                                style: FTextStyle.forgotPasswordTxtStyle,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.07),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 48,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    // All fields are valid, proceed with submission
+                                    setState(() {
+                                      isLoading = true; // Start loading
+                                    });
+                                    BlocProvider.of<AuthFlowBloc>(context)
+                                        .add(
+                                      LogEventHandler(
+                                        email: _emailController.text.toString(),
+                                        password: _password.text.toString(),
+                                      ),
+                                    );
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()),
+                                    );
+                                    // Determine whether to update or create a vendor
+                                  } else {
+                                    // If any field is invalid, trigger validation error display
+                                    formKey.currentState!.validate();
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(26),
+                                    ),
+                                    backgroundColor:
+                                        AppColors.drawerButton1Color),
+                                child: isLoading
+                                    ? CircularProgressIndicator(
+                                        color: Colors.white)
+                                    : Text("Login",
+                                        style: FTextStyle.loginBtnStyle),
+                              ),
+                            ),
+                          ),
+                        ).animateOnPageLoad(
+                            animationsMap['imageOnPageLoadAnimation2']!),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "New user registration ? ",
+                                style: FTextStyle.listTitleSub
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          MembershipRegistration(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  " SignUp",
+                                  style: FTextStyle.listTitleSub.copyWith(
+                                      color: AppColors.drawerButton1Color,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Center(
+                          child: Text(
+                            "OR",
+                            style: FTextStyle.listTitleSub
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Continue as a ",
+                                style: FTextStyle.listTitleSub
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "Guest ? ",
+                                  style: FTextStyle.listTitleSub.copyWith(
+                                      color: AppColors.drawerButton1Color,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              )
-                  .animateOnPageLoad(
-                  animationsMap['imageOnPageLoadAnimation2']!),
-              const SizedBox(height: 20),
-
-
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "New user registration ? ",
-                      style: FTextStyle.listTitleSub.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MembershipRegistration(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        " SignUp",
-                        style: FTextStyle.listTitleSub.copyWith(color: AppColors.drawerButton1Color, fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Center(
-                child: Text(
-                  "OR",
-                  style: FTextStyle.listTitleSub.copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Continue as a ",
-                      style: FTextStyle.listTitleSub.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Guest ? ",
-                        style: FTextStyle.listTitleSub.copyWith(color: AppColors.drawerButton1Color, fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      ],
-    )
-    )
-      );
+              ],
+            );
+  },
+)));
   }
-
 }
-

@@ -6,6 +6,9 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Bvua</string>
+	<key>NSCameraUsageDescription</key>
+    <string>Access to your camera is required to capture photos required for loan processing or your profile.</string>
+
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

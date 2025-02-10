@@ -1,8 +1,10 @@
+import 'package:bvua/screens/all_bloc/auth_flow_bloc.dart';
 import 'package:bvua/screens/auth_section/login_screen.dart';
 import 'package:bvua/utilities/colours.dart';
 import 'package:bvua/utilities/font_text_Style.dart';
 import 'package:bvua/utilities/form_field_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MembershipPartnerForm extends StatefulWidget {
   final String membershipType;
@@ -318,7 +320,10 @@ class _MembershipPartnerFormState extends State<MembershipPartnerForm> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LogScreen(),
+                      builder: (context) => BlocProvider(
+  create: (context) => AuthFlowBloc(),
+  child: LogScreen(),
+),
                     ),
                   );
                 },

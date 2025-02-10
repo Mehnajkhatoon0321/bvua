@@ -1,0 +1,1 @@
+ /Users/mehnajkhatoon/Desktop/untitled\ folder/bvua/.dart_tool/flutter_build/bfcafd07722344a4d2d5e15548f5f9a7/native_assets.yaml: 

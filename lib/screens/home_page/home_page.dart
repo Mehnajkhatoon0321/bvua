@@ -1,3 +1,4 @@
+import 'package:bvua/screens/all_bloc/auth_flow_bloc.dart';
 import 'package:bvua/screens/auth_section/login_screen.dart';
 import 'package:bvua/screens/side_menu/profile_screen.dart';
 import 'package:bvua/utilities/colours.dart';
@@ -9,6 +10,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -237,7 +239,10 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LogScreen()),
+                                  builder: (context) =>  BlocProvider(
+  create: (context) => AuthFlowBloc(),
+  child: LogScreen(),
+)),
                             );
                             break;
 
@@ -357,7 +362,7 @@ class _HomePageState extends State<HomePage> {
                  // Horizontal Scrollable Cards
                  Container(
 
-                     height: MediaQuery.of(context).size.height * 0.24,
+                     height: MediaQuery.of(context).size.height * 0.26,
                      child: ListView.builder(
                          scrollDirection: Axis.horizontal,
                          itemCount: cardData.length,
@@ -401,42 +406,37 @@ class _HomePageState extends State<HomePage> {
 
                  Padding(
                    padding: const EdgeInsets.symmetric(horizontal: 5.0,),
-                   child: Container(
-                     height: MediaQuery.of(context).size.height * 0.68,
-                     color: Color(0x94FAFAF9),
-                     child: Padding(
-                       padding: const EdgeInsets.all(18.0),
-                       child: Column(
-                         mainAxisAlignment: MainAxisAlignment.start,
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
+                   child: Padding(
+                     padding: const EdgeInsets.all(18.0),
+                     child: Column(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
 
-                           Text(
-                               "About",
-                               style: FTextStyle.listTitle.copyWith(fontSize: 22,    fontFamily: "Outfit-SemiBold",fontWeight: FontWeight.w500)
-                           ),
+                         Text(
+                             "About",
+                             style: FTextStyle.listTitle.copyWith(fontSize: 22,    fontFamily: "Outfit-SemiBold",fontWeight: FontWeight.w500)
+                         ),
 
-                           SizedBox(height: 10,),
+                         SizedBox(height: 10,),
 
-                           ClipRRect(
-                           borderRadius: BorderRadius.circular(10.0),
-                           child: Image.asset(
-                           "assets/images/about.png",
-                           fit: BoxFit.cover,
-                           width: double.infinity,
-                             height: 220,
-                           ),
-                           ),
-                           SizedBox(height: 10,),
-                           Text(
-                               "Banarasi Vastra Udyog Association is the hub of Varanasi's textile and apparel industry. We represent artisans, master weavers, traders, entrepreneurs, individuals, family business owners and enthusiasts in this sector and community. Established in [Year] by [Members], our association is deeply rooted in Varanasi's history and legacy for good work and culture. For generations, our city has been renowned for its exquisite textiles, and we're committed to preserving and advancing this unique industry.",
-                               style: FTextStyle.smallTextBlack.copyWith(   fontFamily: "Outfit-SemiBold",fontWeight: FontWeight.w500)
-                           ),
+                         ClipRRect(
+                         borderRadius: BorderRadius.circular(10.0),
+                         child: Image.asset(
+                         "assets/images/about.png",
+                         fit: BoxFit.cover,
+                         width: double.infinity,
+                           height: 220,
+                         ),
+                         ),
+                         SizedBox(height: 10,),
+                         Text(
+                             "Banarasi Vastra Udyog Association is the hub of Varanasi's textile and apparel industry. We represent artisans, master weavers, traders, entrepreneurs, individuals, family business owners and enthusiasts in this sector and community. Established in [Year] by [Members], our association is deeply rooted in Varanasi's history and legacy for good work and culture. For generations, our city has been renowned for its exquisite textiles, and we're committed to preserving and advancing this unique industry.",
+                             style: FTextStyle.smallTextBlack.copyWith(   fontFamily: "Outfit-SemiBold",fontWeight: FontWeight.w500)
+                         ),
 
-                         ],
-                       ),
+                       ],
                      ),
-
                    ),
                  ),
                  Padding(
@@ -692,7 +692,10 @@ Padding(
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LogScreen()),
+                                builder: (context) => BlocProvider(
+  create: (context) => AuthFlowBloc(),
+  child: LogScreen(),
+)),
                             (route) =>
                                 false, // This will remove all previous routes
                           ); // Close the dialog

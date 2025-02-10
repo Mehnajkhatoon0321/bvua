@@ -145,6 +145,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1),),
       child: Scaffold(
+          resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
         body: ListView(
           children: [
@@ -919,8 +920,11 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
 
 // Function to open the bottom sheet to select gender
   void _openCategoryBottomSheet(TextEditingController productCategoryNoController) {
+    FocusManager.instance.primaryFocus?.unfocus(); // Force close keyboard before opening bottom sheet
+
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true, // Allows bottom sheet to resize properly with keyboard
       builder: (BuildContext context) {
         List<bool> _selectedCategories = List<bool>.filled(_productCategories.length, false);
         final TextEditingController otherController = TextEditingController();
@@ -929,129 +933,137 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
 
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(25),
-              ),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.8,
-                decoration: BoxDecoration(color: Colors.white),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60,
-                        width: double.infinity,
-                        color: AppColors.selectGenderBg,
-                        child: Center(
-                          child: Text(
-                            'Choose category',
-                            style: FTextStyle.formLabelTxtStyle,
+            return GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus(); // Hide keyboard when tapping outside
+              },
+              behavior: HitTestBehavior.opaque, // Ensures the tap is detected anywhere
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(25),
+                ),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 60,
+                          width: double.infinity,
+                          color: AppColors.selectGenderBg,
+                          child: Center(
+                            child: Text(
+                              'Choose category',
+                              style: FTextStyle.formLabelTxtStyle,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 16),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: _productCategories.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                ListTile(
-                                  title: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Checkbox(
-                                        value: _selectedCategories[index],
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            if (_productCategories[index] == "Others") {
-                                              _selectedCategories = List<bool>.filled(_productCategories.length, false);
-                                              _selectedCategories[index] = value ?? false;
-                                            } else {
-                                              _selectedCategories[_productCategories.indexOf("Others")] = false;
-                                              _selectedCategories[index] = value ?? false;
-                                            }
-                                            _showValidationMessage = false; // Hide validation message on selection
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        _productCategories[index],
-                                        style: FTextStyle.formLabelTxtStyle.copyWith(
-                                          color: AppColors.headingTxtColour,
-                                          fontSize: 13.sp,
+                        SizedBox(height: 16),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: _productCategories.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Checkbox(
+                                          value: _selectedCategories[index],
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              if (_productCategories[index] == "Others") {
+                                                _selectedCategories = List<bool>.filled(_productCategories.length, false);
+                                                _selectedCategories[index] = value ?? false;
+                                              } else {
+                                                _selectedCategories[_productCategories.indexOf("Others")] = false;
+                                                _selectedCategories[index] = value ?? false;
+                                              }
+                                              _showValidationMessage = false; // Hide validation message on selection
+                                            });
+                                          },
                                         ),
-                                      ),
-                                    ],
+                                        Text(
+                                          _productCategories[index],
+                                          style: FTextStyle.formLabelTxtStyle.copyWith(
+                                            color: AppColors.headingTxtColour,
+                                            fontSize: 13.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                if (_productCategories[index] == "Others" && _selectedCategories[index])
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                    child: TextFormField(
-                                      controller: otherController,
-                                      decoration: InputDecoration(
-                                        hintText: 'Please specify...',
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(12),
+                                  if (_productCategories[index] == "Others" && _selectedCategories[index])
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      child: TextFormField(
+                                        controller: otherController,
+                                        decoration: InputDecoration(
+                                          hintText: 'Please specify...',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                if (index != _productCategories.length - 1) Divider(),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                      if (_showValidationMessage)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text(
-                            'Please select at least one category!',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: 48,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Validate selection
-                              if (!_selectedCategories.contains(true)) {
-                                setState(() {
-                                  _showValidationMessage = true;
-                                });
-                                return;
-                              }
-
-                              List<String> selected = [];
-                              for (int i = 0; i < _productCategories.length; i++) {
-                                if (_selectedCategories[i]) {
-                                  selected.add(_productCategories[i]);
-                                }
-                              }
-                              productCategoryNoController.text = selected.join(', ');
-                              Navigator.pop(context); // Close the bottom sheet
+                                  if (index != _productCategories.length - 1) Divider(),
+                                ],
+                              );
                             },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(26),
-                              ),
-                              backgroundColor: AppColors.drawerButton1Color,
-                            ),
-                            child: Text("Confirm", style: FTextStyle.loginBtnStyle),
                           ),
                         ),
-                      ),
-                    ],
+                        if (_showValidationMessage)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Text(
+                              'Please select at least one category!',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ),
+
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 48,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                FocusScope.of(context).unfocus(); // Dismiss keyboard on confirm
+                                // Validate selection
+                                if (!_selectedCategories.contains(true)) {
+                                  setState(() {
+                                    _showValidationMessage = true;
+                                  });
+                                  return;
+                                }
+
+                                List<String> selected = [];
+                                for (int i = 0; i < _productCategories.length; i++) {
+                                  if (_selectedCategories[i]) {
+                                    selected.add(_productCategories[i]);
+                                  }
+                                }
+                                productCategoryNoController.text = selected.join(', ');
+                                Navigator.pop(context); // Close the bottom sheet
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(26),
+                                ),
+                                backgroundColor: AppColors.drawerButton1Color,
+                              ),
+                              child: Text("Confirm", style: FTextStyle.loginBtnStyle),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -1061,6 +1073,7 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
       },
     );
   }
+
 
 
   void _showContactDialog(BuildContext context, {Map<String, dynamic>? item, int? index}) {

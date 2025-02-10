@@ -1,0 +1,46 @@
+com.example.bvua.app-lifecycle-runtime-2.7.0-0 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/085b90b07b95ac3789fd620c312d9506/transformed/lifecycle-runtime-2.7.0/res
+com.example.bvua.app-lifecycle-livedata-core-2.7.0-1 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/0d2485f50b02db0745b5c381d925b8ba/transformed/lifecycle-livedata-core-2.7.0/res
+com.example.bvua.app-jetified-activity-ktx-1.9.3-2 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/1170a7b122a99222816504f739bfba97/transformed/jetified-activity-ktx-1.9.3/res
+com.example.bvua.app-jetified-window-java-1.2.0-3 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/234f139eaa1f26b3fb288b1efccca816/transformed/jetified-window-java-1.2.0/res
+com.example.bvua.app-lifecycle-livedata-2.7.0-4 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/27562cfd71a00a1539caf5cd07f48314/transformed/lifecycle-livedata-2.7.0/res
+com.example.bvua.app-jetified-core-ktx-1.13.1-5 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/39ba44668029f811a6d628f08c2bc528/transformed/jetified-core-ktx-1.13.1/res
+com.example.bvua.app-jetified-lifecycle-process-2.7.0-6 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/51f8b00911a469a87a1339a94da3652d/transformed/jetified-lifecycle-process-2.7.0/res
+com.example.bvua.app-jetified-savedstate-ktx-1.2.1-7 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/549ca983b3d9dcc08bc4fea874a56435/transformed/jetified-savedstate-ktx-1.2.1/res
+com.example.bvua.app-jetified-datastore-core-release-8 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/59c3f60771dbc9157f93528a861e2bf0/transformed/jetified-datastore-core-release/res
+com.example.bvua.app-jetified-fragment-ktx-1.7.1-9 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/60156b4776e30a3a858381e691fc313c/transformed/jetified-fragment-ktx-1.7.1/res
+com.example.bvua.app-jetified-window-1.2.0-10 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/60f2720dc536679fe2a940d1d10294a6/transformed/jetified-window-1.2.0/res
+com.example.bvua.app-preference-1.2.1-11 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/6792fff32a4a41efb5600a642588519c/transformed/preference-1.2.1/res
+com.example.bvua.app-jetified-lifecycle-livedata-core-ktx-2.7.0-12 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/7a6830030d0aba50a8a6b7e8e178d95c/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/res
+com.example.bvua.app-jetified-startup-runtime-1.1.1-13 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/7d324007f5ac7a66756a44757a995d33/transformed/jetified-startup-runtime-1.1.1/res
+com.example.bvua.app-transition-1.4.1-14 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/8185a91879bc829f73cf3d7afb758e3d/transformed/transition-1.4.1/res
+com.example.bvua.app-jetified-profileinstaller-1.3.1-15 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/82596faf4e00ee903b0791568694b330/transformed/jetified-profileinstaller-1.3.1/res
+com.example.bvua.app-jetified-appcompat-resources-1.1.0-16 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/85fe898a08002f49de3d83ff7cab8572/transformed/jetified-appcompat-resources-1.1.0/res
+com.example.bvua.app-jetified-datastore-release-17 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/8cf6ad7680d61cb4d59d3aa3b32c9297/transformed/jetified-datastore-release/res
+com.example.bvua.app-jetified-activity-1.9.3-18 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/9853230b6688ab6d9c30078d66d206ac/transformed/jetified-activity-1.9.3/res
+com.example.bvua.app-jetified-datastore-preferences-release-19 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/a1cff3374c420016fc181cba635b2dd2/transformed/jetified-datastore-preferences-release/res
+com.example.bvua.app-jetified-lifecycle-viewmodel-savedstate-2.7.0-20 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/a3eabe248020946e265fcc82c8b9d678/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/res
+com.example.bvua.app-jetified-tracing-1.2.0-21 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/a511982132a4543dc24825867bedc0b7/transformed/jetified-tracing-1.2.0/res
+com.example.bvua.app-slidingpanelayout-1.2.0-22 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/b5ffdb40db528bcc9eb776f89819c87a/transformed/slidingpanelayout-1.2.0/res
+com.example.bvua.app-coordinatorlayout-1.0.0-23 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/b94146943cb198d7de29ee736cf27930/transformed/coordinatorlayout-1.0.0/res
+com.example.bvua.app-recyclerview-1.0.0-24 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/bd425735b93c3668d4ceb3c21cdc33d9/transformed/recyclerview-1.0.0/res
+com.example.bvua.app-jetified-savedstate-1.2.1-25 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/be3036e64426c95156f4b86294426d41/transformed/jetified-savedstate-1.2.1/res
+com.example.bvua.app-jetified-lifecycle-runtime-ktx-2.7.0-26 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/c6404b698fc03ff4bdcd77d080762d6e/transformed/jetified-lifecycle-runtime-ktx-2.7.0/res
+com.example.bvua.app-appcompat-1.1.0-27 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/c84c9ecfc7a3f2feba0c24db32c9f597/transformed/appcompat-1.1.0/res
+com.example.bvua.app-fragment-1.7.1-28 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/cc2d262952fa301083d52858a5568541/transformed/fragment-1.7.1/res
+com.example.bvua.app-core-runtime-2.2.0-29 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/cd3789a2a6bb353f5a93ee1a1d3a7054/transformed/core-runtime-2.2.0/res
+com.example.bvua.app-core-1.13.1-30 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/d2fa3eca8c361a7127c0020b8eba4ac8/transformed/core-1.13.1/res
+com.example.bvua.app-jetified-core-1.0.0-31 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/d5fe46bc59df5b06a5dd6473bf3d3c84/transformed/jetified-core-1.0.0/res
+com.example.bvua.app-lifecycle-viewmodel-2.7.0-32 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/d956f1ec6beeb0324e08bea986a1f18f/transformed/lifecycle-viewmodel-2.7.0/res
+com.example.bvua.app-jetified-annotation-experimental-1.4.0-33 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/ea557cae2d33cb3572d18cf9aa6db4e4/transformed/jetified-annotation-experimental-1.4.0/res
+com.example.bvua.app-jetified-lifecycle-viewmodel-ktx-2.7.0-34 /Users/mehnajkhatoon/.gradle/caches/8.9/transforms/f223e5b1d152f4ccbfbb5329d2b61ada/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/res
+com.example.bvua.app-debug-35 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/android/app/src/debug/res
+com.example.bvua.app-main-36 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/android/app/src/main/res
+com.example.bvua.app-pngs-37 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/app/generated/res/pngs/debug
+com.example.bvua.app-resValues-38 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/app/generated/res/resValues/debug
+com.example.bvua.app-packageDebugResources-39 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.example.bvua.app-packageDebugResources-40 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.example.bvua.app-debug-41 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/app/intermediates/merged_res/debug/mergeDebugResources
+com.example.bvua.app-debug-42 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/connectivity_plus/intermediates/packaged_res/debug/packageDebugResources
+com.example.bvua.app-debug-43 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/flutter_plugin_android_lifecycle/intermediates/packaged_res/debug/packageDebugResources
+com.example.bvua.app-debug-44 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/image_picker_android/intermediates/packaged_res/debug/packageDebugResources
+com.example.bvua.app-debug-45 /Users/mehnajkhatoon/Desktop/untitled folder/bvua/build/shared_preferences_android/intermediates/packaged_res/debug/packageDebugResources

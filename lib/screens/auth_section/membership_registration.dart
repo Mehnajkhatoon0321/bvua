@@ -1040,6 +1040,10 @@ class _MembershipRegistrationState extends State<MembershipRegistration> {
                                   setState(() {
                                     _showValidationMessage = true;
                                   });
+
+
+
+
                                   return;
                                 }
 
